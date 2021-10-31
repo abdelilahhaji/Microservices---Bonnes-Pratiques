@@ -1,0 +1,32 @@
+package com.example.ensetbillingservice;
+
+import com.example.ensetbillingservice.dto.InvoiceRequestDTO;
+
+import com.example.ensetbillingservice.service.InvoiceService;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.math.BigDecimal;
+
+@SpringBootApplication
+@Configuration
+@EnableFeignClients
+public class EnsetBillingServiceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(EnsetBillingServiceApplication.class, args);
+    }
+    @Bean
+    CommandLineRunner commandLineRunner(InvoiceService invoiceService){
+        return args -> {
+            invoiceService.save(new InvoiceRequestDTO(BigDecimal.valueOf(90000),"C1" ));
+            invoiceService.save(new InvoiceRequestDTO(BigDecimal.valueOf(83625),"C2" ));
+            invoiceService.save(new InvoiceRequestDTO(BigDecimal.valueOf(85632),"C3" ));
+        };
+    }
+
+}
